@@ -11,6 +11,21 @@ const LandingPage = () => {
   return (
     <div>
       <HeroSection />
+      {/* <nav className="max-md:flex md:hidden items-center space-x-6 justify-center p-4">
+            <Link href="/" className="text-[#1B468F] font-bold hover:text-[#F15A29] transition-colors">
+              Home
+            </Link>
+            <Link href="/tours" className="text-[#1B468F] font-bold hover:text-[#F15A29] transition-colors">
+              Tours
+            </Link>
+            <Link href="/about" className="text-[#1B468F] font-bold hover:text-[#F15A29] transition-colors">
+              About
+            </Link>
+            <Link href="/contact" className="text-[#1B468F] font-bold hover:text-[#F15A29] transition-colors">
+              Contact
+            </Link>
+
+          </nav> */}
       <Navbar />
       <TourPackages />
       {/* <FeaturedCities /> */}

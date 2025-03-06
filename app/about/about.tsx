@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -10,6 +10,9 @@ import Navbar from "@/src/components/shared/navbar"
 import Link from "next/link"
 import PromotionalSection from "@/src/components/promotional_section"
 import Footer from "@/src/components/shared/footer"
+import { getContactsData } from "@/src/server-actions/contacts-data-actions"
+import useGetServerData from "@/src/hooks/use-get-server-data"
+import { OverlayLoader } from "@/src/components/shared/overlay_loader"
 
 
 export default function AboutPage() {
@@ -89,6 +92,17 @@ export default function AboutPage() {
     }
   ]
 
+  const getContacts = useCallback(async () => {
+    const contacts = await getContactsData()
+    return contacts
+  }, []) // Add `id` as a dependency
+
+  const { data: contacts, isLoading: loading } = useGetServerData(getContacts, null)
+
+  if(loading) {
+    return <OverlayLoader />
+  }
+
   return (
     <div className="bg-white overflow-hidden">
       <Navbar />
@@ -125,7 +139,7 @@ export default function AboutPage() {
               <Button size="lg" className="bg-[#F15A29] hover:bg-[#E14A19] text-white">
                 Explore Our Tours
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/20">
+              <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white/20">
                 Meet Our Team
               </Button>
             </div>
@@ -134,7 +148,7 @@ export default function AboutPage() {
       </div>
 
       {/* Stats Section */}
-      <div className="bg-white py-16" ref={sectionRefs.stats}>
+      <div className="bg-white text-white py-16" ref={sectionRefs.stats}>
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -283,7 +297,7 @@ export default function AboutPage() {
               <Badge className="mb-2 bg-[#1B468F] text-white">VISIT US</Badge>
               <h2 className="text-3xl md:text-4xl font-bold text-[#1B468F] mb-6">Our Location</h2>
               <p className="text-gray-600 mb-6">
-                We are based in the heart of Sharm El Sheikh, Egypt&apos;s premier resort destination. 
+                We are based in the heart of ${contacts?.address}, ${contacts?.city}&apos;s premier resort destination. 
                 Our central location makes it easy for you to find us and start planning your dream Egyptian adventure.
               </p>
               
@@ -294,7 +308,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-[#1B468F]">Address</h3>
-                    <p className="text-gray-600">123 Naama Bay Street, Sharm El Sheikh, Egypt</p>
+                    <p className="text-gray-600">${contacts?.address} - ${contacts?.city}</p>
                   </div>
                 </div>
                 
@@ -304,7 +318,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-[#1B468F]">Phone</h3>
-                    <p className="text-gray-600">+20 123 456 7890</p>
+                    <p className="text-gray-600">{contacts?.booking_phone}</p>
                   </div>
                 </div>
                 
@@ -314,7 +328,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-[#1B468F]">Email</h3>
-                    <p className="text-gray-600">info@paradisesharmtours.com</p>
+                    <p className="text-gray-600">{contacts?.booking_email}</p>
                   </div>
                 </div>
                 
@@ -324,8 +338,7 @@ export default function AboutPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-[#1B468F]">Opening Hours</h3>
-                    <p className="text-gray-600">Sunday - Thursday: 9:00 AM - 6:00 PM</p>
-                    <p className="text-gray-600">Friday - Saturday: 10:00 AM - 4:00 PM</p>
+                    <p className="text-gray-600">${contacts?.working_days}: ${contacts?.working_hours}</p>
                   </div>
                 </div>
               </div>
@@ -334,7 +347,7 @@ export default function AboutPage() {
                 <Link href="#" className="bg-[#1B468F] hover:bg-[#0A357E] text-white px-4 py-2 rounded-full flex items-center gap-2">
                   <span>Get Directions</span>
                 </Link>
-                <Link href="#" className="bg-[#F15A29] hover:bg-[#E14A19] text-white px-4 py-2 rounded-full flex items-center gap-2">
+                <Link href="/contact" className="bg-[#F15A29] hover:bg-[#E14A19] text-white px-4 py-2 rounded-full flex items-center gap-2">
                   <span>Contact Us</span>
                 </Link>
               </div>
@@ -349,7 +362,7 @@ export default function AboutPage() {
             >
               <div className="rounded-lg overflow-hidden">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13719.63979922153!2d34.328283!3d27.915283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1453382d5e5b5b5b%3A0x5b5b5b5b5b5b5b5b!2sSharm%20El%20Sheikh%2C%20Egypt!5e0!3m2!1sen!2sus!4v1633025000000!5m2!1sen!2sus"
+                  src={contacts?.google_maps_link}
                   width="100%"
                   height="450"
                   style={{ border: 0 }}
