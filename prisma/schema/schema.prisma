@@ -1,0 +1,112 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model contact_messages {
+  id         Int    @id @default(autoincrement())
+  name       String    @db.VarChar(255)
+  email      String    @db.VarChar(255)
+  phone      String?   @db.VarChar(255)
+  subject    String    @db.VarChar(255)
+  message    String
+}
+
+model faqs {
+  id         Int    @id @default(autoincrement())
+  question   String    @db.VarChar(255)
+  answer     String
+}
+
+model tour_addons {
+  id          Int    @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  price       Float  
+  description String
+  tour_id     Int
+  tour tours @relation(fields: [tour_id], references: [id])
+}
+
+model tour_gallery_images {
+  id Int @id @default(autoincrement())
+  src String
+
+  tour_id Int
+  tour tours @relation(fields: [tour_id], references: [id])
+}
+
+model tour_includes {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255)
+
+  tour_id Int
+  tour tours @relation(fields: [tour_id], references: [id])  
+}
+
+
+model tour_special_offers {
+  id Int @id @default(autoincrement())
+
+  tour_id Int
+  tour tours  @relation(fields: [tour_id], references: [id])
+
+  name String
+  description String
+  price Float
+}
+
+
+model tours {
+  id               Int    @id @default(autoincrement())
+  name             String    @db.VarChar(255)
+  description      String
+  price_per_person Float  
+  city             String    @db.VarChar(255)
+  includes         tour_includes[]
+  duration         Int   
+  location         String    @db.VarChar(255)
+  special_offers   tour_special_offers[]
+  main_image       String    @db.VarChar(255)
+  gallery_images   tour_gallery_images[]
+  addons tour_addons[]
+
+
+  seo_title String
+  seo_description String
+  seo_keywords String
+}
+
+
+model seo_contents {
+  id Int @id @default(autoincrement())
+
+  key String
+
+  name String
+  description String
+  keywords String
+}
+
+model contact_settings {
+  id Int @id @default(1)
+
+  support_phone String
+  booking_phone String
+  urgent_phone_number String
+  email String
+  support_email String
+  booking_email String
+  address String
+  city String
+  facebook String
+  instagram String
+  tiktok String
+  google_maps_link String
+  working_hours Json
+}
+
