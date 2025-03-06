@@ -112,7 +112,7 @@ export default function DashboardTours() {
             </CardContent>
             <CardFooter>
               <div className="flex items-center gap-x-2 justify-end w-full">
-                <Link href={`/dashboard/tours/edit/${tour.id}`}>
+                <Link href={`/dashboard/tours/${tour.id}/edit`}>
                   <Button className="w-full">
                     Edit
                     <Edit className="w-4 h-4" />

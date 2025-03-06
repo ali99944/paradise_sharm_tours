@@ -324,6 +324,33 @@ export const addTourAddon = async (payload: AddTourAddonPayload) => {
 
 
 export const deleteTour = async (id: number) => {
+
+
+
+    await prisma.tour_includes.deleteMany({
+        where: {
+            tour_id: id
+        }
+    })
+
+    await prisma.tour_addons.deleteMany({
+        where: {
+            tour_id: id
+        }
+    })
+
+    await prisma.tour_special_offers.deleteMany({
+        where: {
+            tour_id: id
+        }
+    })
+
+    await prisma.tour_gallery_images.deleteMany({
+        where: {
+            tour_id: id
+        }
+    })
+    
     await prisma.tours.delete({
         where: {
             id
