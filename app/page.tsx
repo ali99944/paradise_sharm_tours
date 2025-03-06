@@ -1,5 +1,6 @@
+'use client';
+
 import AboutSection from '@/src/components/about';
-import FeaturedCities from '@/src/components/featured-cities';
 import Footer from '@/src/components/shared/footer';
 import HeroSection from '@/src/components/hero';
 import Navbar from '@/src/components/shared/navbar';
@@ -11,14 +12,11 @@ const LandingPage = () => {
     <div>
       <HeroSection />
       <Navbar />
-
       <TourPackages />
-      <FeaturedCities />
-
+      {/* <FeaturedCities /> */}
       <AboutSection />
       <PromotionalSection />
-        <Footer />
-
+      <Footer />
     </div>
   );
 };

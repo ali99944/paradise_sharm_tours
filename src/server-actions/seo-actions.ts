@@ -1,10 +1,15 @@
 'use server'
 
 import prisma from "@/lib/prisma"
+import { AvailableSeo } from "../types"
 
-type AvailablePages = 'welcome' | 'contact' | 'about' | 'faqs' | 'terms' | 'privacy_policy'
+export const getAllSeoContents = async () => {
+    const seoContent = await prisma.seo_contents.findMany()
 
-export const getSeoContent = async (page: AvailablePages) => {
+    return seoContent
+}
+
+export const getSeoContent = async (page: AvailableSeo) => {
     const seoContent = await prisma.seo_contents.findFirst({
         where: {
             key: page
@@ -18,12 +23,13 @@ interface SeoContent {
     name: string
     description: string
     keywords: string
+    key: AvailableSeo
 }
 
-export const updateSeoContent = async (page: AvailablePages, payload: SeoContent) => {
+export const updateSeoContent = async (payload: SeoContent) => {
     const seoContent = await prisma.seo_contents.updateMany({
         where: {
-            key: page
+            key: payload.key
         },
         data: {
             name: payload.name,

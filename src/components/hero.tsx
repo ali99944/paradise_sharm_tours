@@ -3,10 +3,9 @@
 // import { useState } from "react"
 
 export default function HeroSection() {
-  // const [date, setDate] = useState<Date | undefined>(new Date("2024-01-12"))
 
   return (
-    <div className="relative overflow-hidden min-h-[80vh] bg-[url('/images/cover.png')] bg-cover bg-top object-top">
+    <div className="relative overflow-hidden min-h-[80vh] bg-[url('/images/logo_cover.png')] bg-cover bg-top object-top">
         <div className="absolute inset-0 bg-black opacity-20"></div>
 
       <div className="container mx-auto px-4 py-16 md:py-24 relative z-10 ">

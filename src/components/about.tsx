@@ -6,7 +6,7 @@ export default function AboutSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-             <span className="text-orange-500">About Travel Guide</span>
+             <span className="text-primary">About Paradise Sharm Tours</span>
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             We&apos;re a team of passionate travelers dedicated to creating unforgettable experiences for adventurers around
@@ -18,7 +18,7 @@ export default function AboutSection() {
           <div className="space-y-6">
             <h3 className="text-2xl font-bold text-orange-500">Your Journey, Our Expertise</h3>
             <p className="text-gray-600">
-              Founded in 2010, Travel Guide has been helping travelers discover the world&apos;s most beautiful destinations
+              Founded in 2010, Paradise Sharm Tours has been helping travelers discover the world&apos;s most beautiful destinations
               for over a decade. Our mission is to make travel accessible, enjoyable, and unforgettable for everyone.
             </p>
             <p className="text-gray-600">

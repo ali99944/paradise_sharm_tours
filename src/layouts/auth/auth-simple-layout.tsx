@@ -1,4 +1,4 @@
-import AppLogoIcon from '@/components/app-logo-icon';
+import Image from 'next/image';
 import Link from 'next/link';
 import { type PropsWithChildren } from 'react';
 
@@ -15,8 +15,13 @@ export default function AuthSimpleLayout({ children, title, description }: Props
                 <div className="flex flex-col gap-8">
                     <div className="flex flex-col items-center gap-4">
                         <Link href={'/'} className="flex flex-col items-center gap-2 font-medium">
-                            <div className="mb-1 flex h-9 w-9 items-center justify-center rounded-md">
-                                <AppLogoIcon className="size-9 fill-current text-[var(--foreground)] dark:text-white" />
+                            <div className="mb-1 flex h-20 w-20 items-center justify-center rounded-md">
+                                <Image
+                                    src="/images/logo-visual.png"
+                                    alt="Logo"
+                                    width={128}
+                                    height={128}
+                                />
                             </div>
                             <span className="sr-only">{title}</span>
                         </Link>

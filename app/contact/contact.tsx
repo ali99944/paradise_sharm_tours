@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from "react"
+import { useState, useRef, useCallback } from "react"
 
 import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
@@ -9,15 +9,15 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Phone, MessageCircle, Clock, Send, CheckCircle, Facebook, Instagram, User, AtSign, Calendar, Headphones, CreditCard, HelpCircle, Star, FileQuestion, Link } from 'lucide-react'
-import { useGetQuery } from "@/lib/queries-actions"
+import { MapPin, Phone, MessageCircle, Clock, Send, CheckCircle, Facebook, Instagram, User, AtSign, Calendar, Headphones, CreditCard, HelpCircle, Star, FileQuestion } from 'lucide-react'
 import Navbar from "@/src/components/shared/navbar"
 import { OverlayLoader } from "@/src/components/shared/overlay_loader"
 import Footer from "@/src/components/shared/footer"
 import useGetServerData from "@/src/hooks/use-get-server-data"
 import { getAllFaqs } from "@/src/server-actions/faq-actions"
 import { FaTiktok } from 'react-icons/fa'
-import { ContactInfo } from "@/src/types"
+import { getContactsData } from "@/src/server-actions/contacts-data-actions"
+import Link from "next/link"
 
 
 export default function ContactUsPage() {
@@ -73,10 +73,12 @@ export default function ContactUsPage() {
     getAllFaqs, []
   )
 
-  const { data: contactJson, isLoading: isContactJsonLoading } = useGetQuery<ContactInfo>({
-    url: '/api/contact-json',
-    key: ['contact-json']
-  })
+  const getContacts = useCallback(async () => {
+    const contacts = await getContactsData()
+    return contacts
+  }, []) // Add `id` as a dependency
+
+  const { data: contacts, isLoading: loading } = useGetServerData(getContacts, null)
 
   const serviceIcons = {
     general: <MessageCircle className="h-5 w-5" />,
@@ -87,7 +89,7 @@ export default function ContactUsPage() {
   }
 
 
-  if(isFaqsLoading || isContactJsonLoading) {
+  if(isFaqsLoading || loading) {
     return <OverlayLoader />
   }
 
@@ -133,7 +135,7 @@ export default function ContactUsPage() {
                 className="border-white text-black hover:bg-white/20"
                 asChild
               >
-                <a href={`tel:${contactJson?.data?.booking_phone}`}>
+                <a href={`tel:${contacts?.booking_phone}`}>
                   <Phone className="mr-2 h-4 w-4" /> Call Us Now
                 </a>
               </Button>
@@ -155,16 +157,47 @@ export default function ContactUsPage() {
                       {serviceIcons.general}
                     </div>
                     <div>
-                      <h3 className="text-xl font-bold text-[#1B468F] mb-3">{'Contact Us'}</h3>
+                      <h3 className="text-xl font-bold text-[#1B468F] mb-3">{'Our Emails'}</h3>
                         <div className="mb-2">
-                          <p className="text-sm text-gray-500">{contactJson?.data?.booking_email}</p>
-                          <p className="font-medium">{contactJson?.data?.booking_phone}</p>
+                          <p className="text-sm text-gray-500">{contacts?.support_email}</p>
+                          <p className="font-medium">{contacts?.booking_email}</p>
                         </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+        <motion.div>
+              <Card className="overflow-hidden shadow-none border  transition-shadow duration-300 p-0">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-4">
+                    <div className={`p-3 ${'bg-[#1B468F]'} rounded-full text-white`}>
+                      {serviceIcons.general}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-[#1B468F] mb-3">{'Our phones'}</h3>
                         <div className="mb-2">
-                          <p className="text-sm text-gray-500">{contactJson?.data?.booking_email}</p>
-                          <p className="font-medium">{contactJson?.data?.booking_phone}</p>
+                          <p className="text-sm text-gray-500">{contacts?.support_phone}</p>
+                          <p className="font-medium">{contacts?.booking_phone}</p>
                         </div>
-                      
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+        <motion.div>
+              <Card className="overflow-hidden shadow-none border  transition-shadow duration-300 p-0">
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-4">
+                    <div className={`p-3 ${'bg-[#1B468F]'} rounded-full text-white`}>
+                      {serviceIcons.general}
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-[#1B468F] mb-3">{'Our Location'}</h3>
+                        <div className="mb-2">
+                          <p className="text-sm text-gray-500">{contacts?.city}</p>
+                          <p className="font-medium">{contacts?.address}</p>
+                        </div>
                     </div>
                   </div>
                 </CardContent>
@@ -195,16 +228,16 @@ export default function ContactUsPage() {
               </div>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Monday - Friday:</span>
-                  <span className="font-medium">9:00 AM - 6:00 PM</span>
+                  <span className="text-gray-600">Working Days:</span>
+                  <span className="font-medium">{contacts?.working_days}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Saturday:</span>
-                  <span className="font-medium">10:00 AM - 4:00 PM</span>
+                  <span className="text-gray-600">Working Hours</span>
+                  <span className="font-medium">{contacts?.working_hours}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Sunday:</span>
-                  <span className="font-medium">Closed</span>
+                  <span className="text-gray-600">Weekend:</span>
+                  <span className="font-medium">{contacts?.weekend}</span>
                 </div>
               </div>
             </div>
@@ -213,13 +246,13 @@ export default function ContactUsPage() {
               <h3 className="font-bold text-[#1B468F] mb-4">Connect With Us</h3>
               <div className="flex gap-4">
                 {[
-                  { icon: <Facebook className="h-5 w-5" />, color: "bg-blue-600" },
-                  { icon: <Instagram className="h-5 w-5" />, color: "bg-pink-600" },
-                  { icon: <FaTiktok className="h-5 w-5" />, color: "bg-blue-700" },
+                  { icon: <Facebook className="h-5 w-5" />, color: "bg-blue-600", link: contacts?.facebook_account },
+                  { icon: <Instagram className="h-5 w-5" />, color: "bg-pink-600", link: contacts?.instagram_account },
+                  { icon: <FaTiktok className="h-5 w-5" />, color: "bg-blue-700", link: contacts?.tiktok_account },
                 ].map((social, index) => (
                   <Link
                     key={index}
-                    href="#"
+                    href={social.link ?? ''}
                     className={`${social.color} p-3 rounded-full text-white hover:opacity-90 transition-opacity`}
                   >
                     {social.icon}
@@ -238,7 +271,7 @@ export default function ContactUsPage() {
               </p>
               <div className="flex items-center gap-3 relative z-10">
                 <Phone className="h-5 w-5 text-[#F15A29]" />
-                <span className="font-bold">+20 123 456 7899</span>
+                <span className="font-bold">{contacts?.urgent_phone_number}</span>
               </div>
             </div>
           </div>
@@ -480,7 +513,7 @@ export default function ContactUsPage() {
 
         <div className="relative h-[500px] w-full">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13719.63979922153!2d34.328283!3d27.915283!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1453382d5e5b5b5b%3A0x5b5b5b5b5b5b5b5b!2sSharm%20El%20Sheikh%2C%20Egypt!5e0!3m2!1sen!2sus!4v1633025000000!5m2!1sen!2sus"
+            src={contacts?.google_maps_link}
             width="100%"
             height="100%"
             style={{ border: 0 }}
@@ -509,84 +542,6 @@ export default function ContactUsPage() {
                 </div>
               </CardContent>
             </Card>
-          </div>
-        </div>
-      </div>
-
-      {/* Newsletter Section */}
-      {/* <div className="bg-[#1B468F] py-16 text-white">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Badge className="mb-2 bg-[#F15A29] text-white">STAY UPDATED</Badge>
-              <h2 className="text-3xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-              <p className="text-white/80 mb-6">
-                Join our mailing list to receive the latest travel tips, exclusive offers, and updates on new destinations.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <Input
-                  type="email"
-                  placeholder="Your email address"
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                />
-                <Button className="bg-[#F15A29] hover:bg-[#E14A19] text-white whitespace-nowrap">
-                  Subscribe Now
-                </Button>
-              </div>
-              <p className="text-xs text-white/60 mt-3">
-                By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
-              </p>
-            </div>
-
-            <div className="relative">
-              <div className="absolute -top-10 -left-10 w-20 h-20 bg-[#F15A29] opacity-20 rounded-full"></div>
-              <div className="absolute -bottom-5 -right-5 w-16 h-16 bg-[#F15A29] opacity-20 rounded-full"></div>
-
-              <div className="bg-white/10 backdrop-blur-sm p-8 rounded-lg border border-white/20 relative">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="p-3 bg-[#F15A29] rounded-full text-white">
-                    <Plane className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Travel Updates</h3>
-                    <p className="text-white/80">
-                      Get the latest information about travel requirements, new tour packages, and seasonal promotions.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-[#F15A29] rounded-full text-white">
-                    <Users className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold mb-2">Exclusive Community</h3>
-                    <p className="text-white/80">
-                      Join our community of travelers and share experiences, tips, and photos from your adventures.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> */}
-
-      {/* Call to Action */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-[#1B468F] mb-6">Ready to Start Your Egyptian Adventure?</h2>
-          <p className="text-gray-600 mb-8">
-            Contact us today to begin planning your dream vacation. Our travel experts are ready to create
-            a personalized itinerary that matches your interests, budget, and schedule.
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button size="lg" className="bg-[#F15A29] hover:bg-[#E14A19] text-white">
-              <Calendar className="mr-2 h-5 w-5" /> Book a Tour
-            </Button>
-            {/* <Button size="lg" variant="outline" className="border-[#1B468F] text-[#1B468F]">
-              <MessageCircle className="mr-2 h-5 w-5" /> Chat with an Expert
-            </Button> */}
           </div>
         </div>
       </div>

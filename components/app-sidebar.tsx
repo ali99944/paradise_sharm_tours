@@ -3,7 +3,7 @@ import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
-import { Contact, FileQuestion, Layout, LayoutGrid, Plane } from 'lucide-react';
+import { Contact, FileQuestion, Layout, LayoutGrid, Plane, SearchSlash } from 'lucide-react';
 import AppLogo from './app-logo';
 import { NavItem } from '@/src/types';
 import Link from 'next/link';
@@ -26,13 +26,18 @@ const mainNavItems: NavItem[] = [
     },
     {
         title: 'Customize Website',
-        url: '/dashboard/settings/customize-website',
+        url: '/dashboard/customize-website-settings',
         icon: Layout,
     },
     {
         title: 'Contact Data',
-        url: '/dashboard/contact',
+        url: '/dashboard/customize-contacts',
         icon: Contact,
+    },
+    {
+        title: 'Seo Settings',
+        url: '/dashboard/customize-seo',
+        icon: SearchSlash,
     },
 ];
 

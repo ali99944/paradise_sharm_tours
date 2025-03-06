@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <header className="absolute top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 py-4">
-        <div className="bg-white/10 rounded-md shadow-none px-4 py-3 flex items-center justify-between">
+        <div className="bg-white rounded-md shadow-none px-4 py-3 flex items-center justify-between">
           <div className="flex items-center">
             <Link href="/" className="text-lg font-bold">
               <span className="text-[#1B468F]">Paradise</span>

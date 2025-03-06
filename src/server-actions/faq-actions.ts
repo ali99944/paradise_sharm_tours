@@ -24,10 +24,10 @@ export const createFaq = async (payload: CreateFaqPayload) => {
     return faq
 }
 
-export const deleteFaq = async (id: number) => {
+export const deleteFaq = async (payload: {id: number}) => {
     await prisma.faqs.delete({
         where: {
-            id
+            id: payload.id
         }
     })
 

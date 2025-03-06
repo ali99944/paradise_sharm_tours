@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+// import { Montserrat } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/src/providers/query-providers";
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-});
+// const montserrat = Montserrat({
+//   subsets: ["latin"],
+// });
 
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.className} antialiased`}
+        className={` antialiased`}
       >
         <ReactQueryProvider>
           {children}

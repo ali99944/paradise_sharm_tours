@@ -4,7 +4,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  // provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -98,15 +99,29 @@ model contact_settings {
   support_phone String
   booking_phone String
   urgent_phone_number String
-  email String
   support_email String
   booking_email String
   address String
   city String
-  facebook String
-  instagram String
-  tiktok String
+  facebook_account String
+  instagram_account String
+  tiktok_account String
   google_maps_link String
-  working_hours Json
+  working_hours String
+  working_days String
+  weekend String
 }
 
+enum manager_role {
+  admin
+  supervisor
+}
+
+model managers {
+  id Int @id @default(autoincrement())
+  name String
+  email String
+  password String
+
+  role manager_role
+}

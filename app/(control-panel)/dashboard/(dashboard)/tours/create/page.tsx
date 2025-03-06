@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { TrashIcon, PlusIcon } from 'lucide-react';
 import useServerAction from '@/src/hooks/use-server-action';
 import { createTour } from '@/src/server-actions/tour-actions';
+import { OverlayLoader } from '@/src/components/shared/overlay_loader';
 
 interface TourFormData {
   name: string;
@@ -46,8 +47,10 @@ const CreateTourPage = () => {
 
   const createTourAction = useServerAction(createTour);
 
+  const [creating, setCreating] = useState(false);
   const onSubmit = async (data: TourFormData) => {
     try {
+      setCreating(true);
       await createTourAction.mutation({
         name: data.name,
         description: data.description,
@@ -64,8 +67,11 @@ const CreateTourPage = () => {
         seo_description: data.seo_description || null,
         seo_keywords: data.seo_keywords || null,
       });
+      setCreating(false)
     } catch (error) {
       console.error('Error creating tour:', error);
+      alert('Error creating tour. Please try again.');
+      setCreating(false)
     }
   };
 
@@ -123,6 +129,10 @@ const CreateTourPage = () => {
       )
     );
   };
+
+  if(creating) {
+    return <OverlayLoader />
+  }
 
   return (
     <div className="p-4">

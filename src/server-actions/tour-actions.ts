@@ -62,7 +62,6 @@ interface TourPayload {
 
 export const createTour = async (payload: TourPayload) => {
     console.log(payload);
-    return
     
     const main_image_src = await uploadToCloudinary(payload.main_image!)
     const gallery_images_src = await Promise.all(
@@ -73,7 +72,7 @@ export const createTour = async (payload: TourPayload) => {
         data: {
             name: payload.name,
             description: payload.description,
-            price_per_person: payload.price_per_person,
+            price_per_person: +payload.price_per_person,
             city: payload.city,
             duration: payload.duration,
             location: payload.location,
