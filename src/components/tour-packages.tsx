@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Map, Star, Users, Heart, Check, Shield, ChevronRight } from 'lucide-react';
+import { Map, Star, Users, Heart, Check, Shield } from 'lucide-react';
 import Link from "next/link";
 import useGetServerData from "../hooks/use-get-server-data";
 import { getAllTours } from "../server-actions/tour-actions";
@@ -72,18 +72,15 @@ export default function TourPackages() {
                 className="group overflow-hidden rounded-lg p-0 bg-white shadow-none border border-gray-200"
               >
                 <div className="relative overflow-hidden">
-                  <div className="absolute inset-0 bg-black/60 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 justify-end">
-                    <Link href={`/tours/${tour.id}`}>
-                      <Button className="bg-orange-500 hover:bg-orange-600">
-                        View Details
-                        <ChevronRight className="w-4 h-4" />
-                      </Button>
-                    </Link>
+                
+                  <Link href={`/tours/${tour.id}`}>
+                  <div className="absolute inset-0 bg-black/60 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 justify-end cursor-pointer">
                   </div>
+                  </Link>
                   <img
                     src={tour.main_image || "/placeholder.svg"}
                     alt={tour.name}
-                    className="object-cover group-hover:scale-105 aspect-square w-full transition-transform duration-300"
+                    className="object-cover group-hover:scale-105 aspect-square w-full transition-transform duration-300 "
                   />
 
                   <div className="absolute bottom-4 left-4 z-20">

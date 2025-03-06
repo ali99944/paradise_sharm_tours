@@ -1,8 +1,8 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useCallback } from "react"
 
-import { motion, useScroll, useTransform } from "framer-motion"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { MapPin, Calendar, Users, Clock, Star, Award, Heart, Globe, Compass, Smile, Target, Phone, Mail} from 'lucide-react'
@@ -16,49 +16,6 @@ import { OverlayLoader } from "@/src/components/shared/overlay_loader"
 
 
 export default function AboutPage() {
-  const [isVisible, setIsVisible] = useState({
-    story: false,
-    values: false,
-    team: false,
-    stats: false
-  })
-  const sectionRefs = {
-    story: useRef(null),
-    values: useRef(null),
-    team: useRef(null),
-    stats: useRef(null)
-  }
-
-  // Parallax effect for hero section
-  const { scrollY } = useScroll()
-  const heroY = useTransform(scrollY, [0, 500], [0, 150])
-
-  // Check if sections are visible for animations
-  useEffect(() => {
-    const observers: Record<string, IntersectionObserver> = {}
-    Object.entries(sectionRefs).forEach(([key, ref]) => {
-      observers[key] = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setIsVisible(prev => ({ ...prev, [key]: true }))
-          }
-        },
-        { threshold: 0.1 }
-      )
-      
-      if (ref.current) {
-        observers[key].observe(ref.current)
-      }
-    })
-    
-    return () => {
-      Object.values(observers).forEach(observer => {
-        observer.disconnect()
-      })
-    }
-  }, []) // Removed sectionRefs from dependencies
-
-
   const values = [
     {
       icon: <Heart className="h-6 w-6" />,
@@ -111,7 +68,6 @@ export default function AboutPage() {
       <div className="relative h-[90vh] flex items-center justify-center overflow-hidden">
         <motion.div 
           className="absolute inset-0 z-0"
-          style={{ y: heroY }}
         >
           <img 
             src="/images/designs/1.png" 
@@ -128,7 +84,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center text-white max-w-3xl mx-auto"
+            className="text-center max-w-3xl mx-auto"
           >
             <Badge className="mb-4 bg-[#F15A29] text-white px-3 py-1">ESTABLISHED 2010</Badge>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">Our Journey to Excellence</h1>
@@ -148,12 +104,9 @@ export default function AboutPage() {
       </div>
 
       {/* Stats Section */}
-      <div className="bg-white text-white py-16" ref={sectionRefs.stats}>
+      <div className="bg-white py-16">
         <div className="container mx-auto px-4">
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={isVisible.stats ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center"
           >
             {[
@@ -164,9 +117,6 @@ export default function AboutPage() {
             ].map((stat, index) => (
               <motion.div 
                 key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={isVisible.stats ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="flex flex-col items-center"
               >
                 <div className="bg-[#F15A29]/10 p-4 rounded-full mb-4 text-[#F15A29]">
@@ -181,12 +131,10 @@ export default function AboutPage() {
       </div>
 
       {/* Our Story Section */}
-      <div className="py-20 bg-gradient-to-b from-white to-gray-50" ref={sectionRefs.story}>
+      <div className="py-20 bg-gradient-to-b from-white to-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={isVisible.story ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.6 }}
             >
               <Badge className="mb-2 bg-[#1B468F] text-white">OUR STORY</Badge>
@@ -227,9 +175,6 @@ export default function AboutPage() {
             </motion.div>
             
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={isVisible.story ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
               <div className="relative z-10 rounded-lg overflow-hidden">
@@ -250,7 +195,7 @@ export default function AboutPage() {
 
 
       {/* Our Values Section */}
-      <div className="py-20 bg-white" ref={sectionRefs.values}>
+      <div className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <Badge className="mb-2 bg-[#1B468F] text-white">OUR VALUES</Badge>
@@ -264,9 +209,6 @@ export default function AboutPage() {
             {values?.map((value, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                animate={isVisible.values ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
                 className="bg-gray-50 rounded-lg p-4 transition-shadow"
               >
                 <div className="bg-[#F15A29]/10 p-4 rounded-full inline-block text-[#F15A29] mb-4">
