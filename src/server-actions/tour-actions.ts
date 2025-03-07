@@ -142,9 +142,12 @@ interface AddTourGalleryImagePayload {
 export const addTourGalleryImage = async (payload: AddTourGalleryImagePayload) => {
     const gallery_image_src = await uploadToCloudinary(payload.gallery_image)
 
-    await prisma.tours.update({
+    const tour = await prisma.tours.update({
         where: {
             id: payload.id
+        },
+        include: {
+            gallery_images: true
         },
         data: {
             gallery_images: {
@@ -155,7 +158,7 @@ export const addTourGalleryImage = async (payload: AddTourGalleryImagePayload) =
         }
     })
 
-    return
+    return tour.gallery_images
 }
 
 interface RemoveTourIncludePayload {
@@ -182,24 +185,29 @@ export const removeTourInclude = async (payload: RemoveTourIncludePayload) => {
 
 interface AddTourIncludePayload {
     id: number
-    include: string
+    include: {
+        name: string
+    }
 }
 
 export const addTourInclude = async (payload: AddTourIncludePayload) => {
-    await prisma.tours.update({
+    const tour = await prisma.tours.update({
         where: {
             id: payload.id
+        },
+        include: {
+            includes: true
         },
         data: {
             includes: {
                 create: {
-                    name: payload.include
+                    name: payload.include.name
                 }
             }
         }
     })
 
-    return
+    return tour.includes
 }
 
 interface ChangeTourMainImagePayload {
@@ -219,7 +227,7 @@ export const changeTourMainImage = async (payload: ChangeTourMainImagePayload) =
         }
     })
 
-    return
+    return main_image_src
 }
 
 interface RemoveTourSpecialOfferPayload {
@@ -254,9 +262,12 @@ interface AddTourSpecialOfferPayload {
 }
 
 export const addTourSpecialOffer = async (payload: AddTourSpecialOfferPayload) => {
-    await prisma.tours.update({
+    const tour = await prisma.tours.update({
         where: {
             id: payload.id
+        },
+        include: {
+            special_offers: true
         },
         data: {
             special_offers: {
@@ -269,7 +280,7 @@ export const addTourSpecialOffer = async (payload: AddTourSpecialOfferPayload) =
         }
     })
 
-    return
+    return tour.special_offers
 }
 
 interface RemoveTourAddonPayload {
@@ -304,9 +315,12 @@ interface AddTourAddonPayload {
 }
 
 export const addTourAddon = async (payload: AddTourAddonPayload) => {
-    await prisma.tours.update({
+    const tour = await prisma.tours.update({
         where: {
             id: payload.id
+        },
+        include: {
+            addons: true
         },
         data: {
             addons: {
@@ -319,7 +333,7 @@ export const addTourAddon = async (payload: AddTourAddonPayload) => {
         }
     })
 
-    return
+    return tour.addons
 }
 
 
@@ -350,7 +364,7 @@ export const deleteTour = async (id: number) => {
             tour_id: id
         }
     })
-    
+
     await prisma.tours.delete({
         where: {
             id

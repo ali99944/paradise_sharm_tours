@@ -5,10 +5,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TrashIcon, PlusIcon } from 'lucide-react';
-// import useServerAction from '@/src/hooks/use-server-action';
-// import { useParams } from 'next/navigation';
+import useServerAction from '@/src/hooks/use-server-action';
+import { useParams } from 'next/navigation';
+import {
+  getTourById,
+  updateTour,
+  addTourInclude,
+  removeTourInclude,
+  addTourSpecialOffer,
+  removeTourSpecialOffer,
+  addTourAddon,
+  removeTourAddon,
+  changeTourMainImage,
+  addTourGalleryImage,
+  removeTourGalleryImage,
+} from '@/src/server-actions/tour-actions';
 import { TourAddon, TourGalleryImage, TourInclude, TourSpecialOffer } from '@/src/types';
 
 interface TourFormData {
@@ -30,49 +43,71 @@ interface TourFormData {
 }
 
 const EditTourPage = () => {
-    
-  const { register, handleSubmit, formState: { errors } } = useForm<TourFormData>();
-  const [includes] = useState<TourInclude[]>([]);
+  const { id: tourId } = useParams();
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<TourFormData>();
+  const [includes, setIncludes] = useState<TourInclude[]>([]);
   const [newInclude, setNewInclude] = useState('');
   const [specialOffers, setSpecialOffers] = useState<Array<TourSpecialOffer>>([]);
   const [addons, setAddons] = useState<Array<TourAddon>>([]);
-  const [mainImage] = useState<string | null>(null);
-  const [galleryImages] = useState<TourGalleryImage[]>([]);
-//   const [newGalleryImage, setNewGalleryImage] = useState<File | null>(null);
+  const [mainImage, setMainImage] = useState<string | null>(null);
+  const [galleryImages, setGalleryImages] = useState<TourGalleryImage[]>([]);
 
-//   const { id: tourId } = useParams();
+  const updateTourAction = useServerAction(updateTour);
+  const addIncludeAction = useServerAction(addTourInclude);
+  const removeIncludeAction = useServerAction(removeTourInclude);
+  const addSpecialOfferAction = useServerAction(addTourSpecialOffer);
+  const removeSpecialOfferAction = useServerAction(removeTourSpecialOffer);
+  const addAddonAction = useServerAction(addTourAddon);
+  const removeAddonAction = useServerAction(removeTourAddon);
+  const updateMainImageAction = useServerAction(changeTourMainImage);
+  const addGalleryImageAction = useServerAction(addTourGalleryImage);
+  const removeGalleryImageAction = useServerAction(removeTourGalleryImage);
 
-//   const updateTourAction = useServerAction(updateTour);
-//   const addIncludeAction = useServerAction(addTourInclude);
-//   const removeIncludeAction = useServerAction(removeTourInclude);
-//   const addSpecialOfferAction = useServerAction(addTourSpecialOffer);
-//   const removeSpecialOfferAction = useServerAction(removeTourSpecialOffer);
-//   const addAddonAction = useServerAction(addTourAddon);
-//   const removeAddonAction = useServerAction(removeTourAddon);
-//   const updateMainImageAction = useServerAction(changeTourMainImage);
-//   const addGalleryImageAction = useServerAction(addTourGalleryImage);
-//   const removeGalleryImageAction = useServerAction(removeTourGalleryImage);
-
-//   const fetchTour = async () => {
-//     const tour = await getTourById(Number(tourId));
-
-//     if (tour) {
-//       setIncludes(tour.includes);
-//       setSpecialOffers(tour.special_offers);
-//       setAddons(tour.addons);
-//       setMainImage(tour.main_image);
-//       setGalleryImages(tour.gallery_images);
-//     }
-//   }
+  // Fetch the current tour data
+  useEffect(() => {
+    const fetchTour = async () => {
+      const tour = await getTourById(Number(tourId));
+      if (tour) {
+        reset({
+          id: String(tour.id),
+          name: tour.name,
+          description: tour.description,
+          price_per_person: tour.price_per_person,
+          city: tour.city,
+          duration: String(tour.duration),
+          location: tour.location,
+          special_offers: tour.special_offers,
+          main_image: tour.main_image,
+          gallery_images: tour.gallery_images,
+          addons: tour.addons,
+          seo_title: tour.seo_title,
+          seo_description: tour.seo_description,
+          seo_keywords: tour.seo_keywords
+        })
+        setIncludes(tour.includes);
+        setSpecialOffers(tour.special_offers);
+        setAddons(tour.addons);
+        setMainImage(tour.main_image);
+        setGalleryImages(tour.gallery_images);
+      }
+    };
+    fetchTour();
+  }, [tourId, reset]);
 
   const onSubmit = async (data: TourFormData) => {
     try {
-        console.log(data);
-        
-    //   await updateTourAction.mutation({
-    //     id: +tourId!,
-    //     ...data,
-    //   });
+      await updateTourAction.mutation({
+        id: Number(tourId),
+        name: data.name,
+        description: data.description,
+        price_per_person: Number(data.price_per_person.toString()),
+        city: data.city,
+        duration: Number(data.duration),
+        location: data.location,
+        seo_title: data.seo_title || null,
+        seo_description: data.seo_description || null,
+        seo_keywords: data.seo_keywords || null,
+      });
       alert('Tour updated successfully!');
     } catch (error) {
       console.error('Error updating tour:', error);
@@ -81,76 +116,88 @@ const EditTourPage = () => {
 
   const handleAddInclude = async () => {
     if (newInclude.trim()) {
-    //   const response = await addIncludeAction.mutation({ id: Number(tourId), include: newInclude });
-    //   setIncludes((prev) => [...prev, response.include]);
-    //   setNewInclude('');
+      await addIncludeAction.mutation({
+        id: Number(tourId),
+        include: { name: newInclude },
+      }, {
+        onSuccess(data) {
+          setIncludes(data);
+          alert('Include added successfully!');
+        },
+      });
+      
+      setNewInclude('');
     }
   };
 
-  const handleRemoveInclude = async (index: number) => {
-    console.log(index);
-    
-    // const include = includes[index];
-    // await removeIncludeAction.mutation({
-    //   id: Number(tourId!),
-    // });
-    // setIncludes((prev) => prev.filter((_, i) => i !== index));
+  const handleRemoveInclude = async (id: number) => {
+    await removeIncludeAction.mutation({ id: Number(tourId), include_id: id });
+    setIncludes((prev) => prev.filter((include) => include.id !== id));
   };
 
   const handleAddSpecialOffer = async () => {
-    // const newOffer = { name: '', price: 0, description: '' };
-    // await addSpecialOfferAction.mutation({
-    //     id: +tourId!,
-    //     special_offer: {
-    //         name: newOffer.name,
-    //         description: newOffer.description,
-    //         price: newOffer.price
-    //     }
-    // }, {
-    //     onSuccess(data) {
-    //         // setSpecialOffers((prev) => [...prev, data]);
-    //     },
-    // });
-    
+    const newOffer = { name: '', price: 0, description: '' };
+    await addSpecialOfferAction.mutation({
+      id: Number(tourId),
+      special_offer: newOffer,
+    }, {
+      onSuccess(data) {
+          setSpecialOffers(data);
+          alert('Special offer added successfully!');
+      },
+    });
   };
 
   const handleRemoveSpecialOffer = async (id: number) => {
-    // await removeSpecialOfferAction.mutation({ tourId, offerId: id });
+    await removeSpecialOfferAction.mutation({ id: Number(tourId), special_offer_id: id });
     setSpecialOffers((prev) => prev.filter((offer) => offer.id !== id));
   };
 
   const handleAddAddon = async () => {
-    // const newAddon = { name: '', price: 0, description: '' };
-    // const response = await addAddonAction.mutation({ tourId, addon: newAddon });
-    // setAddons((prev) => [...prev, response.addon]);
+    const newAddon = { name: '', price: 0, description: '' };
+    await addAddonAction.mutation({
+      id: Number(tourId),
+      addon: newAddon,
+    }, {
+      onSuccess(data) {
+        setAddons(data);
+        alert('Addon added successfully!');
+      },
+    });
   };
 
   const handleRemoveAddon = async (id: number) => {
-    console.log(id);
-    
-    // await removeAddonAction.mutation({ tourId, addonId: id });
-    // setAddons((prev) => prev.filter((addon) => addon.id !== id));
+    await removeAddonAction.mutation({ id: Number(tourId), addon_id: id });
+    setAddons((prev) => prev.filter((addon) => addon.id !== id));
   };
 
   const handleUpdateMainImage = async (file: File) => {
-    console.log(file);
-    
-    // const response = await updateMainImageAction.mutation({ tourId, file });
-    // setMainImage(response.main_image);
+    await updateMainImageAction.mutation({
+      id: Number(tourId),
+      main_image: file
+    }, {
+      onSuccess(data) {
+        setMainImage(data);
+        alert('Main image updated successfully!');
+      },
+    });
   };
 
   const handleAddGalleryImage = async (file: File) => {
-    console.log(file);
-    
-    // const response = await addGalleryImageAction.mutation({ tourId, file });
-    // setGalleryImages((prev) => [...prev, response.image]);
+    await addGalleryImageAction.mutation({
+      id: Number(tourId),
+      gallery_image: file
+    }, {
+      onSuccess(data) {
+        setGalleryImages(data);
+        alert('Gallery image added successfully!');
+      }
+    });
   };
 
-  const handleRemoveGalleryImage = async (image: number) => {
-    console.log(image);
-    
-    // await removeGalleryImageAction.mutation({ tourId, image });
-    // setGalleryImages((prev) => prev.filter((img) => img !== image));
+  const handleRemoveGalleryImage = async (id: number) => {
+    await removeGalleryImageAction.mutation({ id: Number(tourId), gallery_image_id: id });
+    setGalleryImages((prev) => prev.filter((image) => image.id !== id));
   };
 
   return (
@@ -206,8 +253,8 @@ const EditTourPage = () => {
         <div>
           <Label>Includes</Label>
           <div className="space-y-2">
-            {includes.map((include, index) => (
-              <div key={index} className="flex items-center gap-2">
+            {includes.map((include) => (
+              <div key={include.id} className="flex items-center gap-2">
                 <Input value={include.name} readOnly />
                 <Button
                   type="button"
@@ -387,11 +434,11 @@ const EditTourPage = () => {
             }}
           />
           <div className="flex flex-wrap gap-2 mt-2">
-            {galleryImages.map((image, index) => (
-              <div key={index} className="relative">
+            {galleryImages.map((image) => (
+              <div key={image.id} className="relative">
                 <img
                   src={image.src}
-                  alt={`Gallery Image ${index + 1}`}
+                  alt={`Gallery Image ${image.id}`}
                   className="w-24 h-24 object-cover rounded"
                 />
                 <Button
