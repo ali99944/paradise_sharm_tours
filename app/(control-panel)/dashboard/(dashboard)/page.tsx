@@ -30,7 +30,8 @@ export default function Dashboard() {
 
       {/* Statistics Boxes */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <Card>
+      <Link href="/dashboard/tours">
+      <Card className='hover:bg-primary/10'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">{'Total Tours'}</CardTitle>
               <File className="h-4 w-4" />
@@ -39,8 +40,10 @@ export default function Dashboard() {
               <div className="text-2xl font-bold">{stats.total_tours}</div>
             </CardContent>
           </Card>
+      </Link>
 
-          <Card>
+          <Link href="/dashboard/faqs">
+          <Card className='hover:bg-primary/10'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">{'Total FAQS'}</CardTitle>
               <File className="h-4 w-4" />
@@ -49,8 +52,10 @@ export default function Dashboard() {
               <div className="text-2xl font-bold">{stats.total_faqs}</div>
             </CardContent>
           </Card>
+          </Link>
 
-          <Card>
+          <Link href="/dashboard/contact-messages">
+          <Card className='hover:bg-primary/10'>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">{'Total Contact Messages'}</CardTitle>
               <File className="h-4 w-4" />
@@ -59,6 +64,7 @@ export default function Dashboard() {
               <div className="text-2xl font-bold">{stats.total_contact_messages}</div>
             </CardContent>
           </Card>
+          </Link>
       </div>
 
       {/* Quick Actions */}

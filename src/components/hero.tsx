@@ -5,7 +5,7 @@
 export default function HeroSection() {
 
   return (
-    <div className="relative overflow-hidden min-h-[80vh] bg-[url('/images/logo_cover.png')] bg-cover bg-top object-top">
+    <div className="relative overflow-hidden min-h-[80vh] bg-[url('/images/logo_cover.png')] bg-cover ">
         <div className="absolute inset-0 bg-black opacity-20"></div>
 
 

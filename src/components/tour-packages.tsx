@@ -51,7 +51,7 @@ export default function TourPackages() {
   }
 
   return (
-    <section className="py-16 md:py-24 bg-gray-50">
+    <section className="py-16 md:py-24 bg-gray-50" id="tours-section">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -69,7 +69,7 @@ export default function TourPackages() {
             {data.map((tour) => (
               <Card
                 key={tour.id}
-                className="group overflow-hidden rounded-lg p-0 bg-white shadow-none border border-gray-200"
+                className="group overflow-hidden rounded p-0 bg-white shadow-none border border-gray-200"
               >
                 <div className="relative overflow-hidden">
                 
@@ -89,7 +89,7 @@ export default function TourPackages() {
                     </Badge>
                   </div>
                 </div>
-                <CardContent className="p-4">
+                <CardContent className="px-4">
                   <div className="flex justify-between items-start mb-4">
                     <div>
                       <h4 className="text-xl font-bold mb-2 text-primary">{tour.name}</h4>

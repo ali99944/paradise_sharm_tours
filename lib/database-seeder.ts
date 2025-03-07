@@ -8,38 +8,98 @@ const seo_initial_data: Omit<SeoContent, 'id'>[] = [
     key: 'welcome',
     name: 'paradise sharm tours',
     description: 'welcome to paradise sharm tours, a great place for all your journies',
-    keywords: 'paradise'
+    keywords: 'paradise',
+    meta_tags: '',
+    canonical_url: '',
+    og_title: '',
+    og_description: '',
+    og_image: '',
+    twitter_title: '',
+    twitter_description: '',
+    twitter_image: '',
+    schema_markup: '',
+    robots_meta: ''
   },
   {
     key: 'contact',
     name: 'Contact Paradise sharm',
     description: 'no description',
-    keywords: 'paradise'
+    keywords: 'paradise',
+    meta_tags: '',
+    canonical_url: '',
+    og_title: '',
+    og_description: '',
+    og_image: '',
+    twitter_title: '',
+    twitter_description: '',
+    twitter_image: '',
+    schema_markup: '',
+    robots_meta: ''
   },
   {
     key: 'about',
     name: 'About paradise sharm',
     description: 'no description',
-    keywords: 'paradise'
+    keywords: 'paradise',
+    meta_tags: '',
+    canonical_url: '',
+    og_title: '',
+    og_description: '',
+    og_image: '',
+    twitter_title: '',
+    twitter_description: '',
+    twitter_image: '',
+    schema_markup: '',
+    robots_meta: ''
   },
   {
     key: 'faqs',
     name: 'FAQS',
     description: 'no description',
-    keywords: 'paradise,faqs'
+    keywords: 'paradise,faqs',
+    meta_tags: '',
+    canonical_url: '',
+    og_title: '',
+    og_description: '',
+    og_image: '',
+    twitter_title: '',
+    twitter_description: '',
+    twitter_image: '',
+    schema_markup: '',
+    robots_meta: ''
   },
   {
     key: 'terms',
     name: 'paradise sharm tours',
     description: 'no description',
-    keywords: 'paradise,terms'
+    keywords: 'paradise,terms',
+    meta_tags: '',
+    canonical_url: '',
+    og_title: '',
+    og_description: '',
+    og_image: '',
+    twitter_title: '',
+    twitter_description: '',
+    twitter_image: '',
+    schema_markup: '',
+    robots_meta: ''
   },
   {
     key: 'privacy_policy',
     name: 'paradise sharm privacy policy',
     description: 'no description',
-    keywords: 'privacy,policy'
-  },
+    keywords: 'privacy,policy',
+    meta_tags: '',
+    canonical_url: '',
+    og_title: '',
+    og_description: '',
+    og_image: '',
+    twitter_title: '',
+    twitter_description: '',
+    twitter_image: '',
+    schema_markup: '',
+    robots_meta: ''
+  }
 ]
 
 const contacts_record: ContactInfo & { id: number} = {

@@ -18,6 +18,8 @@ import { getAllFaqs } from "@/src/server-actions/faq-actions"
 import { FaTiktok } from 'react-icons/fa'
 import { getContactsData } from "@/src/server-actions/contacts-data-actions"
 import Link from "next/link"
+import useServerAction from "@/src/hooks/use-server-action"
+import { createContactMessage } from "@/src/server-actions/contact-message-actions"
 
 
 export default function ContactUsPage() {
@@ -39,29 +41,27 @@ export default function ContactUsPage() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const createContactMessageAction = useServerAction(createContactMessage)
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormStatus('submitting')
 
-    // Simulate form submission
-    setTimeout(() => {
-      setFormStatus('success')
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setFormStatus('idle')
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: '',
-          service: 'general'
-        })
-        if (formRef.current) {
-          formRef.current.reset()
-        }
-      }, 3000)
-    }, 1500)
+    await createContactMessageAction.mutation(formData, {
+      onSuccess() {
+        setFormStatus('success')
+        formRef.current?.reset()
+
+        setTimeout(() => {
+          setFormStatus('idle')
+        }, 3000)
+      },
+      onFailure() {
+        setFormStatus('error')
+      }
+    })
+    
   }
 
   const scrollToMap = () => {
@@ -87,6 +87,7 @@ export default function ContactUsPage() {
     payment: <CreditCard className="h-5 w-5" />,
     feedback: <Star className="h-5 w-5" />
   }
+
 
 
   if(isFaqsLoading || loading) {
@@ -532,14 +533,8 @@ export default function ContactUsPage() {
                   <h3 className="font-bold text-[#1B468F]">Paradise Sharm Tours</h3>
                 </div>
                 <p className="text-gray-600 mb-4">
-                  123 Adventure Lane, Naama Bay<br />
-                  Sharm El Sheikh, Egypt
+                  {contacts?.address}, {contacts?.city}
                 </p>
-                <div className="flex gap-2 justify-center">
-                  <Button size="sm" className="bg-[#1B468F] hover:bg-[#0A357E] text-white">
-                    Get Directions
-                  </Button>
-                </div>
               </CardContent>
             </Card>
           </div>

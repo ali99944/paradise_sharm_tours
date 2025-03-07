@@ -152,9 +152,15 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
-              &copy; {new Date().getFullYear()} Travel Guide. All rights reserved.
-            </p>
+            <div className="flex gap-x-2 items-center">
+              <Image src="/images/source-logo.png" className="h-full w-auto" alt="Next.js Logo" width={48} height={48} />
+              <p className="text-gray-400 text-sm flex flex-col">
+                <span>{new Date().getFullYear()} Travel Guide. All rights reserved.</span>
+                <span>
+                  powered by <Link href="https://sourcemediaagency.com" className="hover:underline text-primary">Source Media Agency</Link>
+                </span>
+              </p>
+            </div>
             <div className="flex space-x-4 mt-4 md:mt-0">
               <Link href="/terms" className="text-gray-400 hover:text-[#F15A29] text-sm">
                 Terms & Conditions

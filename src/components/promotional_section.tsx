@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import Link from "next/link";
 
 export default function PromotionalSection() {
   return (
@@ -12,9 +13,11 @@ export default function PromotionalSection() {
         <p className="text-white/90 text-lg max-w-2xl mx-auto mb-8">
           Book your dream trip today and enjoy exclusive discounts! Don’t miss out on our limited-time offers.
         </p>
-        <Button className="bg-[#F15A29] hover:bg-[#E14A19] text-white text-lg px-8 py-6 rounded cursor-pointer">
-          Book With Us Now
-        </Button>
+        <Link href="#tours-section">
+          <Button className="bg-[#F15A29] hover:bg-[#E14A19] text-white text-lg px-8 py-6 rounded cursor-pointer">
+            Book With Us Now
+          </Button>
+        </Link>
       </div>
 
       {/* Decorative Elements */}

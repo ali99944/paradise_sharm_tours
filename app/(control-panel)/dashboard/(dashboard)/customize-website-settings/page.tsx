@@ -15,6 +15,21 @@ const available_website_pages: WebsitePage[] = [
         description: "Customize the layout and content of the home page.",
         route: "/dashboard/customize-website/landing"
     },
+    {
+        name: "About Page",
+        description: "Customize the layout and content of the about page.",
+        route: "/dashboard/customize-website/about"
+    },
+    {
+        name: "Contact Page",
+        description: "Customize the layout and content of the contact page.",
+        route: "/dashboard/customize-website/contact"
+    },
+    {
+        name: "FAQs Page",
+        description: "Customize the layout and content of the FAQs page.",
+        route: "/dashboard/customize-website/faq"
+    }
     
 ]
 const SettingsPage = () => {

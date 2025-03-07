@@ -29,3 +29,13 @@ export const getAllContactMessages = async () => {
 
     return contactMessages
 }
+
+export const deleteContactMessage = async (payload: {id: number}) => {
+    await prisma.contact_messages.delete({
+        where: {
+            id: payload.id
+        }
+    })
+
+    return
+}

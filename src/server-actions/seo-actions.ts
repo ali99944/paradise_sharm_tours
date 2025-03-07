@@ -23,7 +23,17 @@ interface SeoContent {
     name: string
     description: string
     keywords: string
-    key: AvailableSeo
+    key: AvailableSeo,
+    meta_tags: string
+    canonical_url: string
+    og_title: string
+    og_description: string
+    og_image: string
+    twitter_title: string
+    twitter_description: string
+    twitter_image: string
+    schema_markup: string
+    robots_meta: string
 }
 
 export const updateSeoContent = async (payload: SeoContent) => {

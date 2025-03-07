@@ -3,7 +3,7 @@ import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
-import { Contact, FileQuestion, Layout, LayoutGrid, Plane, SearchSlash } from 'lucide-react';
+import { Contact, FileQuestion, Layout, LayoutGrid, MessageCircle, Plane, SearchSlash } from 'lucide-react';
 import AppLogo from './app-logo';
 import { NavItem } from '@/src/types';
 import Link from 'next/link';
@@ -23,6 +23,11 @@ const mainNavItems: NavItem[] = [
         title: 'FAQS',
         url: '/dashboard/faqs',
         icon: FileQuestion,
+    },
+    {
+        title: 'Contact Messages',
+        url: '/dashboard/contact-messages',
+        icon: MessageCircle,
     },
     {
         title: 'Customize Website',

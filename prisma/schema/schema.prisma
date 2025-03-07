@@ -91,6 +91,17 @@ model seo_contents {
   name String
   description String
   keywords String
+
+  meta_tags String
+  canonical_url String
+  og_title String
+  og_description String
+  og_image String
+  twitter_title String
+  twitter_description String
+  twitter_image String
+  schema_markup String
+  robots_meta String @default("index, follow")
 }
 
 model contact_settings {
