@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Phone, MessageCircle, Clock, Send, CheckCircle, Facebook, Instagram, User, AtSign, Calendar, Headphones, CreditCard, HelpCircle, Star, FileQuestion } from 'lucide-react'
+import { MapPin, Phone, MessageCircle, Clock, Send, Facebook, Instagram, User, AtSign, Calendar, Headphones, CreditCard, HelpCircle, Star, FileQuestion } from 'lucide-react'
 import Navbar from "@/src/components/shared/navbar"
 import { OverlayLoader } from "@/src/components/shared/overlay_loader"
 import Footer from "@/src/components/shared/footer"
@@ -291,12 +291,12 @@ export default function ContactUsPage() {
                       exit={{ opacity: 0, scale: 0.9 }}
                       className="flex flex-col items-center justify-center py-10 text-center"
                     >
-                      <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-                        <CheckCircle className="h-8 w-8 text-green-600" />
+                      <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <img src="/images/logo-visual.png" alt="Travel Pal" className="w-20 h-20" />
                       </div>
-                      <h3 className="text-2xl font-bold text-[#1B468F] mb-2">Message Sent!</h3>
+                      <h3 className="text-2xl font-bold text-[#1B468F] mb-2">Thank You for Choosing Us!</h3>
                       <p className="text-gray-600 max-w-md">
-                        Thank you for reaching out. We&apos;ve received your message and will get back to you shortly.
+                        We appreciate your trust in us and are honored to have you as our customer. We will get back to you shortly.
                       </p>
                     </motion.div>
                   ) : (

@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { MapPin, Calendar, Clock, DollarSign, Check, Gift, Plus } from "lucide-react"
+import { MapPin, Clock, DollarSign, Check, Gift, Plus } from "lucide-react"
 import Navbar from "@/src/components/shared/navbar"
 import Footer from "@/src/components/shared/footer"
 import useGetServerData from "@/src/hooks/use-get-server-data"
@@ -49,13 +49,7 @@ export default function TourDetails() {
                     <p className="text-white">{tour?.location}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
-                  <Calendar className="h-6 w-6 text-[#F15A29]" />
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">Best Time to Visit</h3>
-                    <p className="text-white">March to May</p>
-                  </div>
-                </div>
+
                 <div className="flex items-center gap-4">
                   <DollarSign className="h-6 w-6 text-[#F15A29]" />
                   <div>
@@ -68,6 +62,13 @@ export default function TourDetails() {
                   <div>
                     <h3 className="text-lg font-semibold text-white">Duration</h3>
                     <p className="text-white">{tour?.duration} Days</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <Clock className="h-6 w-6 text-[#F15A29]" />
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">Tour Hours</h3>
+                    <p className="text-white">From 10:00 AM to 5:00 PM</p>
                   </div>
                 </div>
               </div>
