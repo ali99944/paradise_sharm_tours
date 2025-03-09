@@ -4,7 +4,7 @@ export default function AppLogo() {
     return (
         <>
             <Image
-                src="/images/logo-visual.png"
+                src="/images/logo.png"
                 alt="Logo"
                 width={32}
                 height={32}

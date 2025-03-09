@@ -5,8 +5,8 @@ export function UserInfo({ showEmail = false }: { showEmail?: boolean }) {
     return (
         <>
             <Avatar className="h-8 w-8 overflow-hidden rounded-full">
-                <AvatarImage src={'/images/logo-visual.png'} alt={'sharm tours'} />
-                <AvatarFallback className="rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                <AvatarImage src={'/images/logo.png'} alt={'sharm tours'} />
+                <AvatarFallback className=" bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
                     {/* {getInitials(user.name)} */}
                     {'sharm tours'}
                 </AvatarFallback>

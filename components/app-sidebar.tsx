@@ -3,7 +3,7 @@ import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 
-import { Contact, FileQuestion, Layout, LayoutGrid, MessageCircle, Plane, SearchSlash } from 'lucide-react';
+import { Badge, Box, LayoutGrid, Percent } from 'lucide-react';
 import AppLogo from './app-logo';
 import { NavItem } from '@/src/types';
 import Link from 'next/link';
@@ -15,34 +15,29 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Tours',
-        url: '/dashboard/tours',
-        icon: Plane,
+        title: 'Offers',
+        url: '/dashboard/offers',
+        icon: Percent,
     },
     {
-        title: 'FAQS',
-        url: '/dashboard/faqs',
-        icon: FileQuestion,
+        title: 'Discounts',
+        url: '/dashboard/discounts',
+        icon: Percent,
     },
     {
-        title: 'Contact Messages',
-        url: '/dashboard/contact-messages',
-        icon: MessageCircle,
+        title: 'Services',
+        url: '/dashboard/services',
+        icon: LayoutGrid,
     },
     {
-        title: 'Customize Website',
-        url: '/dashboard/customize-website-settings',
-        icon: Layout,
+        title: 'Orders',
+        url: '/dashboard/orders',
+        icon: Box,
     },
     {
-        title: 'Contact Data',
-        url: '/dashboard/customize-contacts',
-        icon: Contact,
-    },
-    {
-        title: 'Seo Settings',
-        url: '/dashboard/customize-seo',
-        icon: SearchSlash,
+        title: 'Personal Brandings',
+        url: '/dashboard/personal-brandings',
+        icon: Badge,
     },
 ];
 
