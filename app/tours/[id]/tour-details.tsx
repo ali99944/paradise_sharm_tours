@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { MapPin, Clock, DollarSign, Check, Gift, Plus } from "lucide-react"
+import { MapPin, Clock, Check, Gift, Plus, EuroIcon } from "lucide-react"
 import Navbar from "@/src/components/shared/navbar"
 import Footer from "@/src/components/shared/footer"
 import useGetServerData from "@/src/hooks/use-get-server-data"
@@ -51,7 +51,7 @@ export default function TourDetails() {
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <DollarSign className="h-6 w-6 text-[#F15A29]" />
+                  <EuroIcon className="h-6 w-6 text-[#F15A29]" />
                   <div>
                     <h3 className="text-lg font-semibold text-white">Price per person</h3>
                     <p className="text-white">{tour?.price_per_person}</p>

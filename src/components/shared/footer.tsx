@@ -126,28 +126,6 @@ export default function Footer() {
                   />
                 </Link>
                 </div>
-          {/* <div>
-            <h3 className="text-lg font-bold mb-6 relative">
-              <span className="relative z-10">Newsletter</span>
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#F15A29]"></span>
-            </h3>
-            <p className="text-gray-400 mb-4">
-              Subscribe to our newsletter to receive the latest travel deals and updates.
-            </p>
-            <div className="space-y-3">
-              <div className="flex">
-                <Input
-                  type="email"
-                  placeholder="Your email address"
-                  className="rounded-r-none bg-gray-800 border-gray-700 text-white"
-                />
-                <Button className="rounded-l-none bg-[#F15A29] hover:bg-orange-600">Subscribe</Button>
-              </div>
-              <p className="text-xs text-gray-500">
-                By subscribing, you agree to our Privacy Policy and consent to receive updates from our company.
-              </p>
-            </div>
-          </div> */}
         </div>
 
         <div className="border-t border-gray-800 py-6">
@@ -155,9 +133,9 @@ export default function Footer() {
             <div className="flex gap-x-2 items-center">
               <Image src="/images/source-logo.png" className="h-full w-auto" alt="Next.js Logo" width={48} height={48} />
               <p className="text-gray-400 text-sm flex flex-col">
-                <span>{new Date().getFullYear()} Travel Guide. All rights reserved.</span>
+                <span>{new Date().getFullYear()} Paradise Sharm Tours. All rights reserved.</span>
                 <span>
-                  powered by <Link href="https://sourcemediaagency.com" className="hover:underline text-primary">Source Media Agency</Link>
+                  powered by <Link href="https://sourcemediaagency.com" className="hover:underline text-[#F15A29]">Source Media Agency</Link>
                 </span>
               </p>
             </div>

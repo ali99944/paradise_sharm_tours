@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Map, Star, Users, Heart, Check, Shield } from 'lucide-react';
+import { Map, Star, Users, Heart, Check, Shield, Euro } from 'lucide-react';
 import Link from "next/link";
 import useGetServerData from "../hooks/use-get-server-data";
 import { getAllTours } from "../server-actions/tour-actions";
@@ -52,7 +52,7 @@ export default function TourPackages() {
 
   return (
     <section className="py-16 md:py-24 bg-gray-50" id="tours-section">
-      <div className="container mx-auto px-4">
+      <div className="mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             <span className="text-primary">Paradise Tours</span>
@@ -65,7 +65,7 @@ export default function TourPackages() {
 
         {/* Featured Tours Slider */}
         <div className="mb-16">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {data.map((tour) => (
               <Card
                 key={tour.id}
@@ -99,17 +99,18 @@ export default function TourPackages() {
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-2xl font-bold text-primary">
-                        ${tour.price_per_person}
+                      <div className="text-2xl font-bold text-primary flex items-center">
+                        <Euro className="w-4 h-4" />
+                        <span>{tour.price_per_person}</span>
                       </div>
                       <div className="text-sm text-gray-600">per person</div>
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 mb-4">
+                  <div className="grid grid-cols-1 gap-3 mb-4">
                     {tour.includes.map((include, index) => (
                       <div key={index} className="flex items-center gap-2 text-sm text-gray-600">
                         <Check className="h-4 w-4 text-orange-500" />
-                        {include.name}
+                        <span className="flex-1">{include.name}</span>
                       </div>
                     ))}
                   </div>

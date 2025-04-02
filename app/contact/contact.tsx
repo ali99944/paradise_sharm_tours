@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Phone, MessageCircle, Clock, Send, Facebook, Instagram, User, AtSign, Calendar, Headphones, CreditCard, HelpCircle, Star, FileQuestion } from 'lucide-react'
+import { MapPin, Phone, MessageCircle, Clock, Send, Facebook, Instagram, User, AtSign, Calendar, Headphones, CreditCard, HelpCircle, Star } from 'lucide-react'
 import Navbar from "@/src/components/shared/navbar"
 import { OverlayLoader } from "@/src/components/shared/overlay_loader"
 import Footer from "@/src/components/shared/footer"
@@ -236,10 +236,10 @@ export default function ContactUsPage() {
                   <span className="text-gray-600">Working Hours</span>
                   <span className="font-medium">{contacts?.working_hours}</span>
                 </div>
-                <div className="flex justify-between">
+                {/* <div className="flex justify-between">
                   <span className="text-gray-600">Weekend:</span>
                   <span className="font-medium">{contacts?.weekend}</span>
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -470,32 +470,40 @@ export default function ContactUsPage() {
 
           <div className="max-w-3xl mx-auto">
             <Accordion type="single" collapsible className="space-y-4">
-              {(faqs ?? []).map((item, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`item-${index}`}
-                  className="bg-white rounded-lg border border-gray-200 overflow-hidden"
-                >
-                  <AccordionTrigger className="px-6 py-4 hover:bg-gray-50">
-                    <div className="flex items-center gap-3 text-left">
-                      <HelpCircle className="h-5 w-5 text-[#F15A29] flex-shrink-0" />
-                      <span className="font-medium text-[#1B468F]">{item.question}</span>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4 pt-0">
-                    <div className="pl-8 text-gray-600">
-                      {item.answer}
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+              {faqs?.length ? (
+                faqs.map((item, index) => (
+                  <AccordionItem
+                    key={index}
+                    value={`item-${index}`}
+                    className="bg-white rounded-lg border border-gray-200 overflow-hidden"
+                  >
+                    <AccordionTrigger className="px-6 py-4 hover:bg-gray-50">
+                      <div className="flex items-center gap-3 text-left">
+                        <HelpCircle className="h-5 w-5 text-[#F15A29] flex-shrink-0" />
+                        <span className="font-medium text-[#1B468F]">{item.question}</span>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-6 pb-4 pt-0">
+                      <div className="pl-8 text-gray-600">
+                        {item.answer}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))
+              ) : (
+                <div className="text-center py-12">
+                  <p className="text-gray-600 font-medium">No FAQs available currently. Please check back later.</p>
+                </div>
+              )}
             </Accordion>
           </div>
           <div className="mt-10 text-center">
               <p className="text-gray-600 mb-4">Still have questions?</p>
-              <Button className="bg-[#1B468F] hover:bg-[#0A357E] text-white">
-                <FileQuestion className="mr-2 h-4 w-4" /> See more faqs
-              </Button>
+              <Link href={"/contact"}>
+                <Button className="bg-[#1B468F] hover:bg-[#0A357E] text-white">
+                  <Phone className="mr-2 h-4 w-4" /> contact us
+                </Button>
+              </Link>
             </div>
         </div>
       </div>

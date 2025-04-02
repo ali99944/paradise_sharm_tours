@@ -70,16 +70,18 @@ export default function AboutPage() {
           className="absolute inset-0 z-0"
         >
           <img 
-            src="/images/designs/1.png" 
+            src="/images/logo_cover.png" 
             alt="About Paradise Sharm Tours"
             className="object-cover w-full h-full"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent"></div>
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-transparent"></div> */}
         </motion.div>
         
 
         
-        <div className="container mx-auto px-4 relative z-10">
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10 mt-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -87,21 +89,20 @@ export default function AboutPage() {
             className="text-center max-w-3xl mx-auto"
           >
             <Badge className="mb-4 bg-[#F15A29] text-white px-3 py-1">ESTABLISHED 2010</Badge>
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">Our Journey to Excellence</h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90">
+            <h1 className="text-4xl font-bold mb-6 text-primary">Our Journey to Excellence</h1>
+            <p className="text-xl md:text-2xl mb-8">
               Discover the passion, people, and purpose behind Paradise Sharm Tours
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
               <Button size="lg" className="bg-[#F15A29] hover:bg-[#E14A19] text-white">
                 Explore Our Tours
               </Button>
-              <Button size="lg" variant="outline" className="border-white text-primary hover:bg-white/20">
+              <Button size="lg" variant="outline" className="text-white bg-primary">
                 Meet Our Team
               </Button>
             </div>
           </motion.div>
         </div>
-      </div>
 
       {/* Stats Section */}
       <div className="bg-white py-16">
